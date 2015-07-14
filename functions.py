@@ -27,16 +27,21 @@ def body(emaildata):
 	return emaildata[start:end]
 	
 
-def decideSpam(email_subject,email_sender,email_to,email_body,keywords_list):
+def decideSpam(email_subject,email_sender,email_to,email_body,bkeywords_list,wkeywords_list):
 		
 	found=False
-	for line in keywords_list:
+	for line in bkeywords_list:
 		
 		if line in email_subject:
 			found=True
 			print (line,"Found!")
 			break
+	for phrase in wkeywords_list:
 		
+		if  phrase in email_subject:
+			found=False
+			print (phrase,"Found!")
+			break	
 	return found	
 def email_table(maindata,all_emails,j,total_mails):
 	end=0

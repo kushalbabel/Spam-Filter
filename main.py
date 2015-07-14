@@ -5,22 +5,37 @@ import math
 
 from functions import *
 #getting keywords into a file.
-keywords=open("keywords.txt","a+")
+bkeywords=open("blacklist.txt","a+")
 print "Enter the key words to be blacklisted, -1 to submit"
 while True:
-	keyword=raw_input()
-	if keyword=='-1' :
+	bkeyword=raw_input()
+	if bkeyword=='-1' :
 		break
 	else :
-		keywords.write(keyword)
-		keywords.write('\n')
-keywords.close()
-keywords_list=open("keywords.txt").read().splitlines()
+		bkeywords.write(bkeyword)
+		bkeywords.write('\n')
+bkeywords.close()
+bkeywords_list=open("blacklist.txt").read().splitlines()
 
 print "The blacklisted keywords are: "
 
-print keywords_list
+print bkeywords_list
 
+wkeywords=open("whitelist.txt","a+")
+print "Enter the key words to be whitelisted, -1 to submit"
+while True:
+	wkeyword=raw_input()
+	if wkeyword=='-1' :
+		break
+	else :
+		wkeywords.write(wkeyword)
+		wkeywords.write('\n')
+wkeywords.close()
+wkeywords_list=open("whitelist.txt").read().splitlines()
+
+print "The whitelisted keywords are: "
+
+print wkeywords_list
 
 total_mails=input("Enter the first few number of mails to be filtered: ")
 all_emails=[None]*total_mails
@@ -75,7 +90,7 @@ for i in range(0,total_mails):
 	test.write('\n')
 	print (str(i+1) +".  "+email_subject)
 
-	if decideSpam(email_subject,email_sender,email_to,email_body,keywords_list):
+	if decideSpam(email_subject,email_sender,email_to,email_body,bkeywords_list,wkeywords_list):
 		br.select_form(nr=0)
 		control=br.form.find_control('moveto')
 		for item in control.items:
